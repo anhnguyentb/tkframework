@@ -10,9 +10,7 @@ import Container from 'ReactNotes/ui/components/Container'
 
 const styles = StyleSheet.create({
     container: {
-       ...StyleSheet.absoluteFillObject,
-       height: 400,
-       width: 400,
+       ...StyleSheet.absoluteFillObject,              
        justifyContent: 'flex-end',
        alignItems: 'center',
      },
@@ -32,20 +30,20 @@ export default class MapSpec extends Component {
 
     render() {
         return (
-            <Container>
+            <Container >
                 <Toolbar
                     leftElement="arrow-back"
                     onLeftElementPress={() => this.props.navigator.pop()}
                     centerElement={this.props.route.title}
                 />
                 
-                <View style ={styles.container}>
+                <View style={styles.container}>
                     <MapView
-                        
+                         provider={PROVIDER_GOOGLE}
                          style={styles.map}
                          region={{
-                           latitude: 37.78825,
-                           longitude: -122.4324,
+                           latitude: 20.941305,
+                           longitude: 105.90358,
                            latitudeDelta: 0.015,
                            longitudeDelta: 0.0121,
                          }}
