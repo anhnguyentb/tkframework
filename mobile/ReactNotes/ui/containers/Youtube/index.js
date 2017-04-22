@@ -11,7 +11,7 @@ import React, { Component, PropTypes } from 'react'
 import { Avatar, Card, ListItem, Toolbar, Subheader } from 'react-native-material-ui'
 import Container from 'ReactNotes/ui/components/Container'
 
-// import YoutubePlayer from './youtube-player'
+import VideoPlayer from './video-player'
 
 import { connect } from 'react-redux'
 import { searchYoutube } from 'ReactNotes/store/actions/youtube'
@@ -39,12 +39,12 @@ class YoutubeSpec extends Component {
   }
 
   _handleItemClick = (videoId, title) => {
-    // const {navigator} = this.props
-    // navigator.push({
-    //     title: title,
-    //     Page: YoutubePlayer,
-    //     videoId,
-    // })   
+    const {navigator} = this.props
+    navigator.push({
+        title: title,
+        Page: VideoPlayer,
+        videoId,
+    })   
 
   }
 

@@ -11,8 +11,8 @@ export const rejectErrors = (res) => {
     return res
   }
   // we can get message from Promise but no need, just use statusText instead of
-  // server return errors
-  return Promise.reject({ message: res.statusText })
+  // server return errors, also status code
+  return Promise.reject({ message: res.statusText, status })
 }
 
 // try invoke callback for refresh token here
@@ -28,8 +28,11 @@ export const fetchJson = (url, options = {}, base = API_BASE) => (
     },
   })
   .then(rejectErrors)
-  // default return empty json when no content
-  .then((res) => res.status === 204 ? {} : res.json())
+  // default return empty json when no content, we always use json, never use plain text
+  .then((res) => {
+    const contentType = res.headers.get("content-type") || ''
+    return (res.status !== 204 && contentType.indexOf("application/json") !== -1) ? res.json() : {}
+  })
 )
 
 export const fetchJsonWithToken = (token, url, options = {}, ...args) => (

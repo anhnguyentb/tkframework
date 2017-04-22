@@ -20,23 +20,26 @@ if (__DEV__) {
   middleware.push(loggerMiddleware)  
 }
 
-
-// mount it on the Store
-export const store = createStore(
-  rootReducer,
-  initialState,
-  compose(
-    // if you use getStoredState then no need to use auto hydrate to get state back
-    autoRehydrate(),
-    applyMiddleware(...middleware),      
-  )
-)
-
 // Enable persistence
-persistStore(store, {storage: AsyncStorage})
+const configureStore = callback =>   {  
+  // mount it on the Store
+  const store = createStore(
+    rootReducer,
+    initialState,
+    compose(
+      // if you use getStoredState then no need to use auto hydrate to get state back
+      autoRehydrate(),
+      applyMiddleware(...middleware),      
+    )
+  )
 
-// then run the saga
-sagaMiddleware.run(rootSaga)
+  // then run the saga
+  sagaMiddleware.run(rootSaga)
+  persistStore(store, {storage: AsyncStorage}, ()=> callback(store))
+  
+}
+
+export default configureStore
 
 
 
